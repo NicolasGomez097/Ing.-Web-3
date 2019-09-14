@@ -1,6 +1,7 @@
 package com.iw3.restaurante.business;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,21 +19,54 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 
 	@Override
 	public List<Restaurante> list() throws BusinessException {
-		return restauranteDAO.findAll();
+		
+		try {
+			return restauranteDAO.findAll();
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new BusinessException(e);
+		}
 	}
 
 	@Override
-	public Restaurante load(int idRestaurante) throws BusinessException, NotFoundException {
-		return null;
+	public Restaurante load(Integer idRestaurante) throws BusinessException, NotFoundException {
+		Optional<Restaurante> op = null;
+		try {
+			op = restauranteDAO.findById(idRestaurante);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
+		if (!op.isPresent())
+			throw new NotFoundException("No se encuentra el restaurante con id=" + idRestaurante);
+		return op.get();
 	}
 
 	@Override
 	public Restaurante save(Restaurante restaurante) throws BusinessException {
-		return null;
+		try {
+			return restauranteDAO.save(restaurante);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
 	}
 
 	@Override
-	public void remove(int idRestaurante) throws BusinessException, NotFoundException {
+	public void remove(Integer idRestaurante) throws BusinessException, NotFoundException {
+		Optional<Restaurante> op = null;
+
+		try {
+			op = restauranteDAO.findById(idRestaurante);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
+
+		if (!op.isPresent())
+			throw new NotFoundException("No se encuentra el restaurante con id=" + idRestaurante);
+		try {
+			restauranteDAO.deleteById(idRestaurante);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
 	}
 
 }
