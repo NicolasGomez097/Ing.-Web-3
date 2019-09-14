@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.iw3.restaurante.model.Restaurante;
 import com.iw3.restaurante.persistance.RestauranteRepository;
 
+@Service
 public class RestauranteBusiness implements IRestauranteBusiness {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -34,6 +36,7 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 		try {
 			op = restauranteDAO.findById(idRestaurante);
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 		if (!op.isPresent())
@@ -46,6 +49,7 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 		try {
 			return restauranteDAO.save(restaurante);
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 	}
@@ -57,6 +61,7 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 		try {
 			op = restauranteDAO.findById(idRestaurante);
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 
@@ -65,6 +70,7 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 		try {
 			restauranteDAO.deleteById(idRestaurante);
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 	}

@@ -8,7 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import Utils.Tiempo;
+import com.iw3.restaurante.utils.Tiempo;
+import com.iw3.restaurante.utils.TiempoConverter;
 
 @Entity
 @Table(name = "restaurante")
@@ -25,11 +26,11 @@ public class Restaurante {
 	private String direccion;
 	
 	@Column(length = 8)
-	@Convert(converter = Tiempo.TiempoConverter.class)
+	@Convert(converter = TiempoConverter.class)
 	private Tiempo horaApertura;
 	
 	@Column(length = 8)
-	@Convert(converter = Tiempo.TiempoConverter.class)
+	@Convert(converter = TiempoConverter.class)
 	private Tiempo horaCierre;
 	
 	private double puntuacion;

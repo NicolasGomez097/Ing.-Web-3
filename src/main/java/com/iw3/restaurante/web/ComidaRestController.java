@@ -16,47 +16,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iw3.restaurante.business.BusinessException;
-import com.iw3.restaurante.business.IRestauranteBusiness;
+import com.iw3.restaurante.business.IComidaBusiness;
 import com.iw3.restaurante.business.NotFoundException;
-import com.iw3.restaurante.model.Restaurante;
+import com.iw3.restaurante.model.Comida;
 import com.iw3.restaurante.utils.Constantes;
 
 @RestController
-@RequestMapping(Constantes.URL_BASE_RESTAURANTES)
-public class RestauranteRestController {
+@RequestMapping(Constantes.URL_BASE_COMIDAS)
+public class ComidaRestController {
 	
 	@Autowired
-	private IRestauranteBusiness restaurantesBO;
+	private IComidaBusiness comidasBO;
 	
 	@GetMapping("")
-	public ResponseEntity<List<Restaurante>> list() {
+	public ResponseEntity<List<Comida>> list() {
 		try {
-			return new ResponseEntity<List<Restaurante>>(restaurantesBO.list(), HttpStatus.OK);
+			return new ResponseEntity<List<Comida>>(comidasBO.list(), HttpStatus.OK);
 		} catch (BusinessException e) {
-			return new ResponseEntity<List<Restaurante>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<Comida>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Restaurante> load(@PathVariable("id") int idRestaurante) {
+	public ResponseEntity<Comida> load(@PathVariable("id") int idcomida) {
 		try {
-			return new ResponseEntity<Restaurante>(restaurantesBO.load(idRestaurante), HttpStatus.OK);
+			return new ResponseEntity<Comida>(comidasBO.load(idcomida), HttpStatus.OK);
 		} catch (BusinessException e) {
-			return new ResponseEntity<Restaurante>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Comida>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (NotFoundException e) {
-			return new ResponseEntity<Restaurante>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Comida>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@PostMapping(value = "")
-	public ResponseEntity<String> insert(@RequestBody Restaurante restaurante) {
+	public ResponseEntity<String> insert(@RequestBody Comida comida) {
 		try {
-			if(restaurante == null)
-				return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-			
-			restaurantesBO.save(restaurante);
+			comidasBO.save(comida);
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("location", Constantes.URL_BASE_RESTAURANTES + "/" + restaurante.getId());
+			responseHeaders.set("location", Constantes.URL_BASE_COMIDAS + "/" + comida.getId());
 			return new ResponseEntity<String>(responseHeaders, HttpStatus.CREATED);
 		} catch (BusinessException e) {
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -64,9 +61,9 @@ public class RestauranteRestController {
 	}
 
 	@PutMapping(value = "")
-	public ResponseEntity<String> update(@RequestBody Restaurante restaurante) {
+	public ResponseEntity<String> update(@RequestBody Comida comida) {
 		try {
-			restaurantesBO.save(restaurante);
+			comidasBO.save(comida);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (BusinessException e) {
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -74,9 +71,9 @@ public class RestauranteRestController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<String> delete(@PathVariable("id") int idRestaurante) {
+	public ResponseEntity<String> delete(@PathVariable("id") int idComida) {
 		try {
-			restaurantesBO.remove(idRestaurante);
+			comidasBO.remove(idComida);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (BusinessException e) {
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
