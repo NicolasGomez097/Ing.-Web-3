@@ -1,7 +1,6 @@
 package com.iw3.restaurante.business;
 
 import java.util.List;
-
 import com.iw3.restaurante.model.Restaurante;
 
 public interface IRestauranteBusiness {
@@ -12,4 +11,8 @@ public interface IRestauranteBusiness {
 	public Restaurante save(Restaurante restaurante) throws BusinessException;
 
 	public void remove(Integer idRestaurante) throws BusinessException, NotFoundException;
+	
+	public Restaurante findFirstOrderByPuntuacion() throws BusinessException, NotFoundException;
+	
+	public List<Restaurante> findByHoraAperturaGreaterThanAndHoraCierreLessThan(String hora) throws BusinessException, NotFoundException;
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iw3.restaurante.business.BusinessException;
@@ -84,5 +85,31 @@ public class RestauranteRestController {
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	
+	@GetMapping(value ="/best_rating")
+	public ResponseEntity<Restaurante> findFirstOrderByPuntuacion() {
+		try {
+			return new ResponseEntity<Restaurante>(restaurantesBO.findFirstOrderByPuntuacion(),HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<Restaurante>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<Restaurante>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	
+	@GetMapping(value ="/is_open")
+	public ResponseEntity<List<Restaurante>> findByHoraAperturaGreaterThanAndHoraCierreLessThan(@RequestParam("hora") String hora) {
+		try {
+			return new ResponseEntity<List<Restaurante>>(restaurantesBO.findByHoraAperturaGreaterThanAndHoraCierreLessThan(hora),HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	
 
 }

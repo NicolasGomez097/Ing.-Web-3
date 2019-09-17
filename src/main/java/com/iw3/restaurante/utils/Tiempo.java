@@ -1,8 +1,10 @@
 package com.iw3.restaurante.utils;
 
-public class Tiempo {
-    public Integer hora;
-    public Integer minuto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public class Tiempo implements Comparable<Tiempo>{
+    private Integer hora;
+    private Integer minuto;
 
     public Tiempo(){}
 
@@ -42,34 +44,31 @@ public class Tiempo {
         }
     }
 
-    static public Integer comparar(Tiempo a, Tiempo b){
-
-        if((a == null) || (b == null)){
-            return null;
-        }
-
-        if(a.hora < b.hora) {
+    
+    @Override
+	public int compareTo(Tiempo b) {
+        if(this.hora < b.hora) {
             return -1;
 
-        }else if(a.hora == b.hora){
+        }else if(this.hora == b.hora){
 
-            if(a.minuto < b.minuto){
+            if(this.minuto < b.minuto){
                 return -2;
 
-            }else if(a.minuto == b.minuto){
+            }else if(this.minuto == b.minuto){
                 return 0;
 
-            }else if(a.minuto > b.minuto){
+            }else if(this.minuto > b.minuto){
                 return 2;
             }
 
-        }else if(a.hora > b.hora){
+        }else if(this.hora > b.hora){
             return 1;
         }
 
-        return null;
-    }
-    
+		return 0;
+	}
+
     @Override
     public String toString() {
     	String salida = "";
@@ -80,9 +79,30 @@ public class Tiempo {
     	
     	if(minuto < 10)
 			salida += "0";
-    	salida += minuto + ":";
+    	salida += minuto;
 		
     	return salida;
     }
+    
+    @JsonIgnore
+    public boolean isValid() {
+    	return this.hora!=null;
+    }
+
+	public Integer getHora() {
+		return hora;
+	}
+
+	public void setHora(Integer hora) {
+		this.hora = hora;
+	}
+
+	public Integer getMinuto() {
+		return minuto;
+	}
+
+	public void setMinuto(Integer minuto) {
+		this.minuto = minuto;
+	}
 }
 

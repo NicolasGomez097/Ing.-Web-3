@@ -32,7 +32,7 @@ public class Restaurante {
 	@Column(length = 8)
 	@Convert(converter = TiempoConverter.class)
 	private Tiempo horaCierre;
-	
+	@Column
 	private double puntuacion;
 
 	public int getId() {
