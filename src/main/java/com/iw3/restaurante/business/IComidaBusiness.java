@@ -12,4 +12,6 @@ public interface IComidaBusiness {
 	public Comida save(Comida Comida) throws BusinessException;
 
 	public void remove(int idComida) throws BusinessException, NotFoundException;
+	
+	public List<Comida> orderByPriceAndRestaurante(String orden, String restaurante) throws BusinessException, NotFoundException;
 }

@@ -1,5 +1,6 @@
 package com.iw3.restaurante.business;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +70,60 @@ public class ComidaBusiness implements IComidaBusiness {
 		} catch (Exception e) {
 			throw new BusinessException(e);
 		}
+	}
+	
+	@Override
+	public List<Comida> orderByPriceAndRestaurante(String orden, String restaurante)
+			throws BusinessException, NotFoundException {
+		Optional<List<Comida>> op = null;
+		Optional<Comida> opComida = null;
+		List<Comida> list = new ArrayList<>();
+		
+		try {
+			switch(orden) {
+			
+			case "menor":
+				
+				if(restaurante.equals("ALL")) 
+					op= comidaDAO.findAlltByRestauranteOrderByPrecioDesc(restaurante);
+				else
+					opComida= comidaDAO.findFirstByRestauranteOrderByPrecioDesc(restaurante);
+				break;
+				
+				
+			case "mayor":
+				
+				if(restaurante.equals("ALL")) 
+					op= comidaDAO.findAllByRestauranteOrderByPrecioAsc(restaurante);
+				else {
+					opComida= comidaDAO.findFirstByRestauranteOrderByPrecioAsc(restaurante);
+				}
+				break;
+
+			default:
+				throw new BusinessException();
+			}
+			
+			
+			if (!op.isPresent())
+			{
+				if (!opComida.isPresent()) {
+					throw new NotFoundException("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );
+				}
+				else {
+					list.add(opComida.get());
+				}
+			}
+			else {
+				list = op.get();
+			}
+			
+		}
+		catch (Exception e) {
+			throw new BusinessException(e);
+		}	
+		return list;
+		
 	}
 
 }

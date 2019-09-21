@@ -5,9 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.iw3.restaurante.model.Restaurante;
 import com.iw3.restaurante.persistance.RestauranteRepository;
-import com.iw3.restaurante.utils.Tiempo;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner{

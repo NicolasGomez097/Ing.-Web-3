@@ -1,10 +1,14 @@
 package com.iw3.restaurante.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +25,10 @@ public class Comida {
 	@Column(length = 20)
 	private String unidad;
 	
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="restaurante_id", nullable = false)
+	Restaurante restaurante;
 
 	public int getId() {
 		return id;
@@ -61,6 +69,15 @@ public class Comida {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+
+	public Restaurante getRestaurante() {
+		return restaurante;
+	}
+
+	public void setRestaurante(Restaurante restaurante) {
+		this.restaurante = restaurante;
+	}
+	
 	
 	
 	
