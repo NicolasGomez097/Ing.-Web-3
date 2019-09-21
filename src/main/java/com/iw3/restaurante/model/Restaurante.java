@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iw3.restaurante.utils.Tiempo;
 import com.iw3.restaurante.utils.TiempoConverter;
 
@@ -40,7 +41,7 @@ public class Restaurante {
 	@Column
 	private double puntuacion;
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL)
 	private List<Comida> comidas;
 
