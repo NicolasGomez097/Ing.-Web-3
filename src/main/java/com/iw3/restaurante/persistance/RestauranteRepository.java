@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.iw3.restaurante.model.Restaurante;
@@ -17,11 +16,6 @@ public interface RestauranteRepository extends JpaRepository<Restaurante,Integer
 	
 	Optional<List<Restaurante>> findByHoraAperturaLessThanEqual(Tiempo apertura);
 	
+	Optional<List<Restaurante>> findByNombreLike(String nombre);
 	Optional<List<Restaurante>> findByComidasNombreLike(String nombre);
-	
-	@Query(value = "SELECT * FROM restaurante "
-			+ "WHERE (hora_apertura <= ?1 AND hora_cierre > ?1) "
-			+ "OR (hora_apertura > hora_cierre AND NOT (hora_apertura > ?1 AND hora_cierre <= ?1))"
-			,nativeQuery = true)
-	Optional<List<Restaurante>> obtenerRestauranteAbierto(String tiempo);
 }

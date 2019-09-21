@@ -107,8 +107,18 @@ public class RestauranteRestController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (NotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
+		}		
+	}
+	
+	@GetMapping(value ="/getDir")
+	public ResponseEntity<List<String>> findByNombre(@RequestParam("nombre") String nombre) {
+		try {
+			return new ResponseEntity<>(restaurantesBO.getDireccionRestaurante(nombre),HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}		
 	}
 	
 	
