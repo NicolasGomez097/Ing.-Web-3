@@ -83,14 +83,14 @@ public class ComidaRestController {
 	}
 	
 	@GetMapping(value = "/menor_mayor_precio_restaurante")
-	public ResponseEntity<String> orderByPriceAndRestaurante(@PathVariable("orden") String orden, @PathVariable("restaurante") String restaurante) {
+	public ResponseEntity<List<Comida>> orderByPriceAndRestaurante(@PathVariable("orden") String o, @PathVariable("restaurante") String r) {
 		try {
-			comidasBO.orderByPriceAndRestaurante(orden, restaurante);
-			return new ResponseEntity<String>(HttpStatus.OK);
+			comidasBO.orderByPriceAndRestaurante(o, r);
+			return new ResponseEntity<List<Comida>>(HttpStatus.OK);
 		} catch (BusinessException e) {
-			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<Comida>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (NotFoundException e) {
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<Comida>>(HttpStatus.NOT_FOUND);
 		}
 	}
 
