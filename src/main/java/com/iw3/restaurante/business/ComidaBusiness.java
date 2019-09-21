@@ -36,6 +36,7 @@ public class ComidaBusiness implements IComidaBusiness {
 		try {
 			op = comidaDAO.findById(idComida);
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 		if (!op.isPresent())
@@ -48,6 +49,7 @@ public class ComidaBusiness implements IComidaBusiness {
 		try {
 			return comidaDAO.save(comida);
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 	}
@@ -60,6 +62,7 @@ public class ComidaBusiness implements IComidaBusiness {
 		try {
 			op = comidaDAO.findById(idComida);
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 
@@ -68,6 +71,7 @@ public class ComidaBusiness implements IComidaBusiness {
 		try {
 			comidaDAO.deleteById(idComida);
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 	}
@@ -108,6 +112,7 @@ public class ComidaBusiness implements IComidaBusiness {
 				break;
 
 			default:
+				
 				throw new BusinessException();
 			}
 			
@@ -118,6 +123,7 @@ public class ComidaBusiness implements IComidaBusiness {
 			
 		}
 		catch (Exception e) {
+			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}	
 		return list;
