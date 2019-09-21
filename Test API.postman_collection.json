@@ -1,0 +1,477 @@
+{
+	"info": {
+		"_postman_id": "d7d8ad68-1714-4ddc-aa81-428253842237",
+		"name": "Test API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetRestaurantes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetComidas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/comidas",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"comidas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InsertarRestaurante",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Johnny B Good\",\r\n    \"direccion\": \"Av. Hipólito Yrigoyen 320\",\r\n    \"horaApertura\": {\r\n        \"hora\": 8,\r\n        \"minuto\": 0\r\n    },\r\n    \"horaCierre\": {\r\n        \"hora\": 17,\r\n        \"minuto\": 0\r\n    },\r\n    \"puntuacion\": 4.2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InsertarComida",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Lomito\",\n    \"precio\": 210,\n    \"cantidad\": 1,\n    \"unidad\": \"porcion\",\n    \"restaurante\": {\n    \t\"id\":1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/comidas",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"comidas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InsertarRestauranteConComidas",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"nombre\": \"Johnny B Good2\",\r\n        \"direccion\": \"Av. Hipólito Yrigoyen 3200\",\r\n        \"horaApertura\": {\r\n            \"hora\": 10,\r\n            \"minuto\": 0\r\n        },\r\n        \"horaCierre\": {\r\n            \"hora\": 22,\r\n            \"minuto\": 0\r\n        },\r\n        \"puntuacion\": 4.1,\r\n        \"comidas\": [\r\n            {\r\n                \"nombre\": \"Lomito2\",\r\n                \"precio\": 230.0,\r\n                \"cantidad\": 1,\r\n                \"unidad\": \"porcion\"\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarRestaurante",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Johnny B Good\",\r\n    \"direccion\": \"Av. Hipólito Yrigoyen 320\",\r\n    \"horaApertura\": {\r\n        \"hora\": 8,\r\n        \"minuto\": 0\r\n    },\r\n    \"horaCierre\": {\r\n        \"hora\": 17,\r\n        \"minuto\": 0\r\n    },\r\n    \"puntuacion\": 4.25\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarComida",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1,\n    \"nombre\": \"Lomito\",\n    \"precio\": 215,\n    \"cantidad\": 1,\n    \"unidad\": \"porcion\",\n    \"restaurante\": {\"id\":1}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/comidas",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"comidas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarRestaurante",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes/1",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarComida",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/comidas/1",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"comidas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MejorRestauranteRating",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes/best_rating",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes",
+						"best_rating"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RestaurantesAbiertos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes/is_open?hora=09:00",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes",
+						"is_open"
+					],
+					"query": [
+						{
+							"key": "hora",
+							"value": "09:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ComidaPorRestaurante",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/comidas/comidas_por_restaurante?restaurante=Johnny B Good",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"comidas",
+						"comidas_por_restaurante"
+					],
+					"query": [
+						{
+							"key": "restaurante",
+							"value": "Johnny B Good"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OrdenarComida",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/comidas/menor_mayor_precio_restaurante?orden=mayor&restaurante=ALL",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"comidas",
+						"menor_mayor_precio_restaurante"
+					],
+					"query": [
+						{
+							"key": "orden",
+							"value": "mayor"
+						},
+						{
+							"key": "restaurante",
+							"value": "ALL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRestaurantePorComida",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes/where_comida?comida=lomito",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes",
+						"where_comida"
+					],
+					"query": [
+						{
+							"key": "comida",
+							"value": "lomito"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DireccionRestaurante",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "143.0.100.212:8080/api/v1/restaurantes/getDir?nombre=johnny",
+					"host": [
+						"143",
+						"0",
+						"100",
+						"212"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"restaurantes",
+						"getDir"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "johnny"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

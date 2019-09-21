@@ -55,8 +55,7 @@ public class ComidaBusiness implements IComidaBusiness {
 	}
 
 	@Override
-	public void remove(int idComida) throws BusinessException, NotFoundException {
-		
+	public void remove(int idComida) throws BusinessException, NotFoundException {		
 		
 		Optional<Comida> op = null;
 		try {
@@ -69,6 +68,7 @@ public class ComidaBusiness implements IComidaBusiness {
 		if (!op.isPresent())
 			throw new NotFoundException("No se encuentra la Comida con id= " + idComida);
 		try {
+			log.error(""+idComida+"\n\n\n");
 			comidaDAO.deleteById(idComida);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -111,15 +111,13 @@ public class ComidaBusiness implements IComidaBusiness {
 				}
 				break;
 
-			default:
-				
-				throw new BusinessException();
+			default:				
+				throw new BusinessException("Bad request");
 			}
 			
 			
 			if (list.isEmpty())
-				throw new NotFoundException("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );
-			
+				throw new NotFoundException("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );			
 			
 		}
 		catch (Exception e) {

@@ -1,6 +1,5 @@
 package com.iw3.restaurante.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,8 +27,8 @@ public class Comida {
 	private String unidad;
 	
 	@JsonBackReference
-	@ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-	@JoinColumn(name="restaurante_id", nullable = false,referencedColumnName = "id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="restaurante_id", nullable = false)
 	Restaurante restaurante;
 
 	public int getId() {

@@ -42,7 +42,9 @@ public class Restaurante {
 	private double puntuacion;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "restaurante", cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "restaurante",		
+		fetch = FetchType.EAGER,
+		cascade = {CascadeType.MERGE,CascadeType.REMOVE})
 	private List<Comida> comidas;
 
 	public int getId() {
