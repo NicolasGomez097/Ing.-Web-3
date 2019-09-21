@@ -26,7 +26,7 @@ public class Comida {
 	private String unidad;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="restaurante_id", nullable = false)
 	Restaurante restaurante;
 
