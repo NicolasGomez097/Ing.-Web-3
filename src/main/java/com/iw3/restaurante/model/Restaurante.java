@@ -1,13 +1,18 @@
 package com.iw3.restaurante.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.iw3.restaurante.utils.Tiempo;
 import com.iw3.restaurante.utils.TiempoConverter;
 
@@ -34,6 +39,10 @@ public class Restaurante {
 	private Tiempo horaCierre;
 	@Column
 	private double puntuacion;
+	
+	@JsonBackReference
+	@OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL)
+	private List<Comida> comidas;
 
 	public int getId() {
 		return id;
@@ -82,4 +91,14 @@ public class Restaurante {
 	public void setPuntuacion(double puntuacion) {
 		this.puntuacion = puntuacion;
 	}
+
+	public List<Comida> getComidas() {
+		return comidas;
+	}
+
+	public void setComidas(List<Comida> comidas) {
+		this.comidas = comidas;
+	}
+	
+	
 }

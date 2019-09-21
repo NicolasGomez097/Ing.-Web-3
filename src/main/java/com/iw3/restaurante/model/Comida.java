@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "comida")
 public class Comida {
@@ -25,7 +27,7 @@ public class Comida {
 	@Column(length = 20)
 	private String unidad;
 	
-	
+	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="restaurante_id", nullable = false)
 	Restaurante restaurante;

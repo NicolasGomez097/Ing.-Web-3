@@ -17,7 +17,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante,Integer
 	
 	Optional<List<Restaurante>> findByHoraAperturaLessThanEqual(Tiempo apertura);
 	
-	/*Optional<List<Comida>> findBy(Tiempo apertura, Tiempo cierre);*/
+	Optional<List<Restaurante>> findByComidasNombreLike(String nombre);
 	
 	@Query(value = "SELECT * FROM restaurante "
 			+ "WHERE (hora_apertura <= ?1 AND hora_cierre > ?1) "

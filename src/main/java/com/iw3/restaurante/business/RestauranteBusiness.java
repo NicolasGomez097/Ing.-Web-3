@@ -113,4 +113,21 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 		return op.get();
 	}
 
+	@Override
+	public List<Restaurante> findByComidasNombreLike(String nombre) throws BusinessException, NotFoundException {
+		Optional<List<Restaurante>> op = null;
+		try {
+			op = restauranteDAO.findByComidasNombreLike('%'+nombre+'%');
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new BusinessException(e);
+		}
+		
+		if (!op.isPresent())
+			throw new NotFoundException("No se encuentra ningún restaurante");
+		
+		
+		return op.get();
+	}
+
 }

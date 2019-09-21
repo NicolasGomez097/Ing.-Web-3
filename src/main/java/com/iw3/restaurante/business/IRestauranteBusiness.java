@@ -15,4 +15,6 @@ public interface IRestauranteBusiness {
 	public Restaurante findFirstOrderByPuntuacion() throws BusinessException, NotFoundException;
 	
 	public List<Restaurante> findByHoraAperturaGreaterThanAndHoraCierreLessThan(String hora) throws BusinessException, NotFoundException;
+	
+	public List<Restaurante> findByComidasNombreLike(String nombre) throws BusinessException, NotFoundException;
 }
