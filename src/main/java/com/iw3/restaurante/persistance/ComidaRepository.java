@@ -12,10 +12,11 @@ import com.iw3.restaurante.model.Comida;
 public interface ComidaRepository extends JpaRepository<Comida,Integer> {
 	
 	Optional<Comida> findByRestauranteNombre(String nombre);
-	Optional<Comida> findFirstByRestauranteOrderByPrecioAsc(String nombre);
-	Optional<Comida> findFirstByRestauranteOrderByPrecioDesc(String nombre);
+	Optional<Comida> findFirstByRestauranteNombreOrderByPrecioAsc(String nombre);
+	Optional<Comida> findFirstByRestauranteNombreOrderByPrecioDesc(String nombre);
 	Optional<List<Comida>> findAllByRestauranteOrderByPrecioAsc(String nombre);
 	Optional<List<Comida>> findAlltByRestauranteOrderByPrecioDesc(String nombre);
+	Optional<List<Comida>> findAlltByRestauranteNombreOrderByNombreDesc(String nombre);
 
 }
 	

@@ -14,4 +14,6 @@ public interface IComidaBusiness {
 	public void remove(int idComida) throws BusinessException, NotFoundException;
 	
 	public List<Comida> orderByPriceAndRestaurante(String orden, String restaurante) throws BusinessException, NotFoundException;
+	
+	public List<Comida> findComidasByRestaurante (String nombre) throws BusinessException, NotFoundException;
 }

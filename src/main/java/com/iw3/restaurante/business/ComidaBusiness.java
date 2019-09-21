@@ -87,7 +87,7 @@ public class ComidaBusiness implements IComidaBusiness {
 				if(restaurante.equals("ALL")) 
 					op= comidaDAO.findAlltByRestauranteOrderByPrecioDesc(restaurante);
 				else
-					opComida= comidaDAO.findFirstByRestauranteOrderByPrecioDesc(restaurante);
+					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioDesc(restaurante);
 				break;
 				
 				
@@ -96,7 +96,7 @@ public class ComidaBusiness implements IComidaBusiness {
 				if(restaurante.equals("ALL")) 
 					op= comidaDAO.findAllByRestauranteOrderByPrecioAsc(restaurante);
 				else {
-					opComida= comidaDAO.findFirstByRestauranteOrderByPrecioAsc(restaurante);
+					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioAsc(restaurante);
 				}
 				break;
 
@@ -124,6 +124,21 @@ public class ComidaBusiness implements IComidaBusiness {
 		}	
 		return list;
 		
+	}
+
+	@Override
+	public List<Comida> findComidasByRestaurante(String nombre) throws BusinessException, NotFoundException{
+		Optional<List<Comida>> op = null;
+		try {
+			op = comidaDAO.findAlltByRestauranteNombreOrderByNombreDesc(nombre);
+			if(!op.isPresent())
+				throw new NotFoundException("No se encontro lista de comidas para el restaurante = "+nombre);
+			else
+			return op.get(); 
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new BusinessException(e);
+		}
 	}
 
 }

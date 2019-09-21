@@ -93,5 +93,17 @@ public class ComidaRestController {
 			return new ResponseEntity<List<Comida>>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@GetMapping(value = "/comidas_por_restaurante")
+	public ResponseEntity<List<Comida>> findComidasByRestaurante(@PathVariable("restaurante") String r) {
+		try {
+			comidasBO.findComidasByRestaurante(r);
+			return new ResponseEntity<List<Comida>>(HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<List<Comida>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<List<Comida>>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 }
