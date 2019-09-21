@@ -14,8 +14,8 @@ public interface ComidaRepository extends JpaRepository<Comida,Integer> {
 	Optional<Comida> findByRestauranteNombre(String nombre);
 	Optional<Comida> findFirstByRestauranteNombreOrderByPrecioAsc(String nombre);
 	Optional<Comida> findFirstByRestauranteNombreOrderByPrecioDesc(String nombre);
-	Optional<List<Comida>> findAllByRestauranteOrderByPrecioAsc(String nombre);
-	Optional<List<Comida>> findAllByRestauranteOrderByPrecioDesc(String nombre);
+	Optional<List<Comida>> findAllByOrderByPrecioAsc();
+	Optional<List<Comida>> findAllByOrderByPrecioDesc();
 	Optional<List<Comida>> findAllByRestauranteNombreOrderByNombreDesc(String nombre);
 
 }

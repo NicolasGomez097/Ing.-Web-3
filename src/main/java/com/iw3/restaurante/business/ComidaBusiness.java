@@ -84,19 +84,26 @@ public class ComidaBusiness implements IComidaBusiness {
 			
 			case "menor":
 				
-				if(restaurante.equals("ALL")) 
-					op= comidaDAO.findAllByRestauranteOrderByPrecioDesc(restaurante);
-				else
-					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioDesc(restaurante);
+				if(restaurante.equals("ALL")) { 
+					op= comidaDAO.findAllByOrderByPrecioAsc();
+					list = op.get();
+				}
+				else {
+					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioAsc(restaurante);
+					list.add(opComida.get());
+				}
 				break;
 				
 				
 			case "mayor":
 				
-				if(restaurante.equals("ALL")) 
-					op= comidaDAO.findAllByRestauranteOrderByPrecioAsc(restaurante);
+				if(restaurante.equals("ALL")) {
+					op= comidaDAO.findAllByOrderByPrecioDesc();
+					list = op.get();
+				}
 				else {
-					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioAsc(restaurante);
+					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioDesc(restaurante);
+					list.add(opComida.get());
 				}
 				break;
 
@@ -105,18 +112,9 @@ public class ComidaBusiness implements IComidaBusiness {
 			}
 			
 			
-			if (!op.isPresent())
-			{
-				if (!opComida.isPresent()) {
-					throw new NotFoundException("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );
-				}
-				else {
-					list.add(opComida.get());
-				}
-			}
-			else {
-				list = op.get();
-			}
+			if (list.isEmpty())
+				throw new NotFoundException("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );
+			
 			
 		}
 		catch (Exception e) {
