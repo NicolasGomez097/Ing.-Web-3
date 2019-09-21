@@ -1,5 +1,6 @@
 package com.iw3.restaurante.business;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,24 +94,62 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 
 	@Override
 	public List<Restaurante> findByHoraAperturaGreaterThanAndHoraCierreLessThan(String hora) throws BusinessException, NotFoundException {
-		Optional<List<Restaurante>> op = null;
+		List<Restaurante> op = null;
+		
 		TiempoConverter tc = new TiempoConverter();
 		Tiempo tiempo = tc.convertToEntityAttribute(hora);
 		if(!tiempo.isValid()) {
 			throw new BusinessException("El tiempo no es valido");
 		}
+		
+		
 		try {
-			op = restauranteDAO.obtenerRestauranteAbierto(hora);
+			op = restauranteDAO.findAll();
+			
+			for(int i = 0; i < op.size(); i++) {
+				Restaurante res =  op.get(i);
+				Tiempo apertura = res.getHoraApertura();
+				Tiempo cierre = res.getHoraCierre();
+				if(
+						(apertura.compareTo(cierre) < 0 &&
+								(apertura.compareTo(tiempo) > 0 || cierre.compareTo(tiempo) <= 0)
+						)
+						|| (apertura.compareTo(cierre) > 0
+								&& cierre.compareTo(tiempo) <= 0 
+								&& apertura.compareTo(tiempo) > 0)
+				){
+					op.remove(i);
+					i--;
+				}
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new BusinessException(e);
+		}		
+		
+		return op;
+	}
+	
+	@Override
+	public List<String> getDireccionRestaurante(String nombre)  throws BusinessException, NotFoundException{
+		Optional<List<Restaurante>> aux;
+		List<String> salida = new ArrayList<String>();
+		nombre = "%" + nombre + "%";
+		try {
+			aux = restauranteDAO.findByNombreLike(nombre);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 		
-		if (!op.isPresent())
-			throw new NotFoundException("No se encuentra ningún restaurante");
+		if (!aux.isPresent())
+			throw new NotFoundException("No se encuentra ningún restaurante con el nombre " + nombre);
 		
+		for(int i=0; i < aux.get().size();i++) {
+			salida.add(aux.get().get(i).getNombre() + ": " + aux.get().get(i).getDireccion());
+		}
 		
-		return op.get();
+		return salida;
 	}
 
 }
