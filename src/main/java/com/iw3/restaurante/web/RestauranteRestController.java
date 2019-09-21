@@ -121,5 +121,17 @@ public class RestauranteRestController {
 		}		
 	}
 	
+	
+	@GetMapping(value ="/where_comida")
+	public ResponseEntity<List<Restaurante>> findByComidasNombreLike(@RequestParam("comida") String comida) {
+		try {
+			return new ResponseEntity<List<Restaurante>>(restaurantesBO.findByComidasNombreLike(comida),HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
 
 }
