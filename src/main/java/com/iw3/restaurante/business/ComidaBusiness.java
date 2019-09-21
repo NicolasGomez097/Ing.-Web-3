@@ -85,7 +85,7 @@ public class ComidaBusiness implements IComidaBusiness {
 			case "menor":
 				
 				if(restaurante.equals("ALL")) 
-					op= comidaDAO.findAlltByRestauranteOrderByPrecioDesc(restaurante);
+					op= comidaDAO.findAllByRestauranteOrderByPrecioDesc(restaurante);
 				else
 					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioDesc(restaurante);
 				break;
@@ -130,7 +130,7 @@ public class ComidaBusiness implements IComidaBusiness {
 	public List<Comida> findComidasByRestaurante(String nombre) throws BusinessException, NotFoundException{
 		Optional<List<Comida>> op = null;
 		try {
-			op = comidaDAO.findAlltByRestauranteNombreOrderByNombreDesc(nombre);
+			op = comidaDAO.findAllByRestauranteNombreOrderByNombreDesc(nombre);
 			if(!op.isPresent())
 				throw new NotFoundException("No se encontro lista de comidas para el restaurante = "+nombre);
 			else

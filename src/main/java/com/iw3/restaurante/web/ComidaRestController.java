@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iw3.restaurante.business.BusinessException;
@@ -83,10 +84,10 @@ public class ComidaRestController {
 	}
 	
 	@GetMapping(value = "/menor_mayor_precio_restaurante")
-	public ResponseEntity<List<Comida>> orderByPriceAndRestaurante(@PathVariable("orden") String o, @PathVariable("restaurante") String r) {
+	public ResponseEntity<List<Comida>> orderByPriceAndRestaurante(@RequestParam("orden") String o, @RequestParam("restaurante") String r) {
 		try {
-			comidasBO.orderByPriceAndRestaurante(o, r);
-			return new ResponseEntity<List<Comida>>(HttpStatus.OK);
+			
+			return new ResponseEntity<List<Comida>>(comidasBO.orderByPriceAndRestaurante(o, r),HttpStatus.OK);
 		} catch (BusinessException e) {
 			return new ResponseEntity<List<Comida>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (NotFoundException e) {
@@ -95,10 +96,9 @@ public class ComidaRestController {
 	}
 	
 	@GetMapping(value = "/comidas_por_restaurante")
-	public ResponseEntity<List<Comida>> findComidasByRestaurante(@PathVariable("restaurante") String r) {
+	public ResponseEntity<List<Comida>> findComidasByRestaurante(@RequestParam("restaurante") String r) {
 		try {
-			comidasBO.findComidasByRestaurante(r);
-			return new ResponseEntity<List<Comida>>(HttpStatus.OK);
+			return new ResponseEntity<List<Comida>>(comidasBO.findComidasByRestaurante(r),HttpStatus.OK);
 		} catch (BusinessException e) {
 			return new ResponseEntity<List<Comida>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (NotFoundException e) {
