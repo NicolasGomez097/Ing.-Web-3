@@ -23,7 +23,10 @@ public class ComidaBusiness implements IComidaBusiness {
 	@Override
 	public List<Comida> list() throws BusinessException {
 		try {
-			return comidaDAO.findAll();
+			List<Comida> aux = comidaDAO.findAll();
+			log.info("Se realizo la consulta de la lista de comida");
+			
+			return aux;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
