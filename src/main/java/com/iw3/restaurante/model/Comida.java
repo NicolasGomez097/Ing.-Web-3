@@ -18,7 +18,7 @@ public class Comida {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	@Column(length = 30)
 	private String nombre;
 	private double precio;
@@ -31,11 +31,11 @@ public class Comida {
 	@JoinColumn(name="restaurante_id", nullable = false)
 	Restaurante restaurante;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -79,7 +79,16 @@ public class Comida {
 		this.restaurante = restaurante;
 	}
 	
-	
+	@Override
+	public String toString() {
+		String comidaJSON ; 
+		comidaJSON = "{\nid:"+this.id+",\n";
+		comidaJSON += "nombre:"+this.nombre+",\n";
+		comidaJSON += "precio:"+this.precio+",\n"; 
+		comidaJSON += "cantidad:"+this.cantidad+",\n";
+		comidaJSON += "unidad:"+this.unidad+"\n}";
+		return comidaJSON;
+	}
 	
 	
 

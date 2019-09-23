@@ -55,11 +55,19 @@ public class ComidaBusiness implements IComidaBusiness {
 
 	@Override
 	public Comida save(Comida comida) throws BusinessException {
+				
+		boolean isNew = comida.getId() == null;
+		
 		try {
 			comidaAux = comidaDAO.save(comida);
-			if(comidaAux!=null) {
-				log.info("Comida Guardada id: "+comidaAux.getId());
-			}
+			
+			if(!isNew) 
+				log.info("Actualización, objeto nuevo: "+comidaAux.toString());
+			
+			else
+				log.info("Inserción, objeto nuevo:" + comidaAux.toString());
+				
+			
 			return comidaAux;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
