@@ -55,6 +55,9 @@ public class RestauranteRestController {
 			if(restaurante == null)
 				return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 			
+			if(restaurante.getPuntuacion() > 5 || restaurante.getPuntuacion() < 0)
+				return new ResponseEntity<String>("El valor de la puntuacion es incorrecto", HttpStatus.BAD_REQUEST);
+			
 			restaurantesBO.save(restaurante);
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("location", Constantes.URL_BASE_RESTAURANTES + "/" + restaurante.getId());
@@ -88,13 +91,13 @@ public class RestauranteRestController {
 	
 	
 	@GetMapping(value ="/best_rating")
-	public ResponseEntity<Restaurante> findFirstOrderByPuntuacion() {
+	public ResponseEntity<List<Restaurante>> findFirstOrderByPuntuacion() {
 		try {
-			return new ResponseEntity<Restaurante>(restaurantesBO.findFirstOrderByPuntuacion(),HttpStatus.OK);
+			return new ResponseEntity<List<Restaurante>>(restaurantesBO.findBestRating(),HttpStatus.OK);
 		} catch (BusinessException e) {
-			return new ResponseEntity<Restaurante>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (NotFoundException e) {
-			return new ResponseEntity<Restaurante>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
 	}

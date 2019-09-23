@@ -12,10 +12,9 @@ import com.iw3.restaurante.utils.Tiempo;
 @Repository
 public interface RestauranteRepository extends JpaRepository<Restaurante,Integer> {
 
-	Optional<Restaurante> findFirstByOrderByPuntuacionDesc();
-	
-	Optional<List<Restaurante>> findByHoraAperturaLessThanEqual(Tiempo apertura);
-	
+	Optional<Restaurante> findFirstByOrderByPuntuacionDesc();	
+	Optional<List<Restaurante>> findByHoraAperturaLessThanEqual(Tiempo apertura);	
 	Optional<List<Restaurante>> findByNombreLike(String nombre);
 	Optional<List<Restaurante>> findByComidasNombreLike(String nombre);
+	Optional<List<Restaurante>> findByPuntuacion(double puntuacion);
 }
