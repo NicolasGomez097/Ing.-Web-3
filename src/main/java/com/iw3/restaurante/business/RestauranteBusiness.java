@@ -49,7 +49,6 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 	@Override
 	public Restaurante save(Restaurante restaurante) throws BusinessException {
 		Restaurante res;
-		Optional<Restaurante> aux = null;
 		boolean isNew = restaurante.getId() == null;
 		
 		try {
@@ -81,6 +80,7 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 
 		if (!op.isPresent())
 			throw new NotFoundException("No se encuentra el restaurante con id=" + idRestaurante);
+		
 		try {
 			restauranteDAO.deleteById(idRestaurante);
 		} catch (Exception e) {
@@ -95,15 +95,16 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 		Optional<List<Restaurante>> res = null;
 		Optional<Restaurante> op;
 		try {
-			op = restauranteDAO.findFirstByOrderByPuntuacionDesc();
-			
-			res = restauranteDAO.findByPuntuacion(op.get().getPuntuacion());
+			op = restauranteDAO.findFirstByOrderByPuntuacionDesc();			
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
-		if (!res.isPresent())
+		
+		if (!op.isPresent())
 			throw new NotFoundException("No se encuentra ningún restaurante");
+		
+		res = restauranteDAO.findByPuntuacion(op.get().getPuntuacion());
 		return res.get();
 	}
 

@@ -6,9 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner{
-	
-	//@Autowired
-	//private RestauranteRepository restaurantesBO;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);		
@@ -16,16 +13,6 @@ public class Application implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-		/*Restaurante r = new Restaurante();
-		r.setNombre("Johnny B Good");
-		r.setDireccion("Av. Hipólito Yrigoyen 320");
-		r.setHoraApertura(new Tiempo("08:00"));
-		r.setHoraCierre(new Tiempo("13:00"));
-		r.setPuntuacion(4.2);
-		
-		restaurantesBO.save(r);	*/
-		//Tiempo a = new Tiempo("08:00:00");
-		//Tiempo b = new Tiempo("02:00:00");
 	}
 
 }

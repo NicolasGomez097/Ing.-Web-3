@@ -6,7 +6,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,9 +41,8 @@ public class Restaurante {
 	private double puntuacion;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "restaurante",		
-		fetch = FetchType.EAGER,
-		cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "restaurante",
+		cascade = CascadeType.ALL)
 	private List<Comida> comidas;
 
 	public Integer getId() {

@@ -84,6 +84,7 @@ public class ComidaBusiness implements IComidaBusiness {
 		if (!op.isPresent()) {
 			throw new NotFoundException("No se encuentra la Comida con id= " + idComida);
 		}
+		
 		try {
 			log.info("REMOVE-COMIDA, id: "+idComida);
 			comidaDAO.deleteById(idComida);
@@ -99,49 +100,67 @@ public class ComidaBusiness implements IComidaBusiness {
 		Optional<List<Comida>> op = null;
 		Optional<Comida> opComida = null;
 		List<Comida> list = new ArrayList<>();
+		boolean valid = true;
 		
 		try {
-			switch(orden) {
-			
-			case "menor":
+			switch(orden) {				
+				case "menor":
+					
+					if(restaurante.equals("ALL")) { 
+						op= comidaDAO.findAllByOrderByPrecioAsc();
+						if (!op.isPresent()) 
+							throw new NotFoundException("No hay comidas cargadas");
+						
+						list = op.get();
+					}
+					else {
+						opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioAsc(restaurante);
+						if (!opComida.isPresent()) 
+							throw new NotFoundException("No hay comidas para el restaurante " + restaurante);
+						
+						list.add(opComida.get());
+					}
+					break;
 				
-				if(restaurante.equals("ALL")) { 
-					op= comidaDAO.findAllByOrderByPrecioAsc();
-					list = op.get();
-				}
-				else {
-					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioAsc(restaurante);
-					list.add(opComida.get());
-				}
-				break;
 				
-				
-			case "mayor":
-				
-				if(restaurante.equals("ALL")) {
-					op= comidaDAO.findAllByOrderByPrecioDesc();
-					list = op.get();
-				}
-				else {
-					opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioDesc(restaurante);
-					list.add(opComida.get());
-				}
-				break;
-
-			default:
-				log.error("BAD-REQUEST, orden:"+orden);
-				throw new BusinessException("Bad request");
-			}
-			
-			
-			if (list.isEmpty()) {
-				throw new NotFoundException("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );			
-			}
+				case "mayor":
+					
+					if(restaurante.equals("ALL")) {
+						op= comidaDAO.findAllByOrderByPrecioDesc();
+						if (!op.isPresent()) 
+							throw new NotFoundException("No hay comidas cargadas");
+						
+						list = op.get();
+					}
+					else {
+						opComida= comidaDAO.findFirstByRestauranteNombreOrderByPrecioDesc(restaurante);
+						if (!opComida.isPresent()) 
+							throw new NotFoundException("No hay comidas para el restaurante " + restaurante);
+						list.add(opComida.get());
+					}
+					break;
+	
+				default:
+					valid = false;
+			}			
 		}
 		catch (Exception e) {
+			if(e instanceof NotFoundException)
+				throw e;
+			
 			log.error(e.getMessage(), e);
-			throw new BusinessException(e);
-		}	
+			throw new BusinessException(e);			
+		}
+		
+		if(!valid) {
+			log.error("BAD-REQUEST, orden:"+orden);
+			throw new BusinessException("Bad request");
+		}
+		
+		if (list.isEmpty()) 
+			throw new NotFoundException("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );			
+		
+		
 		return list;
 		
 	}
@@ -151,16 +170,15 @@ public class ComidaBusiness implements IComidaBusiness {
 		Optional<List<Comida>> op = null;
 		try {
 			op = comidaDAO.findAllByRestauranteNombreOrderByNombreDesc(nombre);
-			if(!op.isPresent()) {
-				log.warn("No se encontro lista de comidas para el restaurante = "+nombre);
-				throw new NotFoundException("No se encontro lista de comidas para el restaurante = "+nombre);
-			}
-			else
-			return op.get(); 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
+		
+		if(!op.isPresent()) 
+			throw new NotFoundException("No se encontro lista de comidas para el restaurante = "+nombre);
+		
+		return op.get(); 
 	}
 
 }
