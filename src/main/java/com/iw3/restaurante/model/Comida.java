@@ -82,11 +82,11 @@ public class Comida {
 	@Override
 	public String toString() {
 		String comidaJSON ; 
-		comidaJSON = "{\nid:"+this.id+",\n";
-		comidaJSON += "nombre:"+this.nombre+",\n";
-		comidaJSON += "precio:"+this.precio+",\n"; 
-		comidaJSON += "cantidad:"+this.cantidad+",\n";
-		comidaJSON += "unidad:"+this.unidad+"\n}";
+		comidaJSON = "{id:"+this.id;
+		comidaJSON += ",nombre:"+this.nombre;
+		comidaJSON += ",precio:"+this.precio; 
+		comidaJSON += ",cantidad:"+this.cantidad;
+		comidaJSON += ",unidad:"+this.unidad+"}";
 		return comidaJSON;
 	}
 	

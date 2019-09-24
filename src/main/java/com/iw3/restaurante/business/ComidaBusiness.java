@@ -26,9 +26,7 @@ public class ComidaBusiness implements IComidaBusiness {
 	public List<Comida> list() throws BusinessException {
 		try {
 			listComidaAux= comidaDAO.findAll();
-			if(listComidaAux.isEmpty()) {
-				log.warn("No hay resultados para Comida");
-			}
+			
 			return listComidaAux;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -40,32 +38,29 @@ public class ComidaBusiness implements IComidaBusiness {
 	public Comida load(int idComida) throws BusinessException, NotFoundException {
 		Optional<Comida> op = null;
 		try {
-			log.info("Load en Comida id: "+idComida);
 			op = comidaDAO.findById(idComida);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
 		if (!op.isPresent()) {
-			log.warn("No se encuentra la comida con id= " + idComida);
 			throw new NotFoundException("No se encuentra la comida con id= " + idComida);
 		}
 		return op.get();
 	}
 
 	@Override
-	public Comida save(Comida comida) throws BusinessException {
-				
+	public Comida save(Comida comida) throws BusinessException {				
 		boolean isNew = comida.getId() == null;
 		
 		try {
 			comidaAux = comidaDAO.save(comida);
 			
 			if(!isNew) 
-				log.info("Actualización, objeto nuevo: "+comidaAux.toString());
+				log.info("UPDATE-COMIDA, objeto: "+ comidaAux.toString());
 			
 			else
-				log.info("Inserción, objeto nuevo:" + comidaAux.toString());
+				log.info("INSERT-COMIDA, objeto:" + comidaAux.toString());
 				
 			
 			return comidaAux;
@@ -87,11 +82,10 @@ public class ComidaBusiness implements IComidaBusiness {
 		}
 
 		if (!op.isPresent()) {
-			log.warn("No se encuentra la Comida con id= " + idComida);
 			throw new NotFoundException("No se encuentra la Comida con id= " + idComida);
 		}
 		try {
-			log.info("Borrando Comida id: "+idComida+"\n\n\n");
+			log.info("REMOVE-COMIDA, id: "+idComida);
 			comidaDAO.deleteById(idComida);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -105,7 +99,7 @@ public class ComidaBusiness implements IComidaBusiness {
 		Optional<List<Comida>> op = null;
 		Optional<Comida> opComida = null;
 		List<Comida> list = new ArrayList<>();
-		log.info("Ordenando por Precio: "+orden+" y Restaurante: "+restaurante);
+		
 		try {
 			switch(orden) {
 			
@@ -134,13 +128,13 @@ public class ComidaBusiness implements IComidaBusiness {
 				}
 				break;
 
-			default:				
+			default:
+				log.error("BAD-REQUEST, orden:"+orden);
 				throw new BusinessException("Bad request");
 			}
 			
 			
 			if (list.isEmpty()) {
-				log.warn("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );
 				throw new NotFoundException("No se encuentra la comida con orden = "+orden+" y restaurante = "+restaurante );			
 			}
 		}
@@ -155,7 +149,6 @@ public class ComidaBusiness implements IComidaBusiness {
 	@Override
 	public List<Comida> findComidasByRestaurante(String nombre) throws BusinessException, NotFoundException{
 		Optional<List<Comida>> op = null;
-		log.info("Buscando Comidas en Restaurante: "+nombre);
 		try {
 			op = comidaDAO.findAllByRestauranteNombreOrderByNombreDesc(nombre);
 			if(!op.isPresent()) {

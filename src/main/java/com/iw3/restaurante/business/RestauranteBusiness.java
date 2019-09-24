@@ -60,10 +60,10 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 		}
 		
 		if(!isNew) 			
-			log.info("Actualización, objeto nuevo:"+restaurante.toString());
+			log.info("UPDATE-RESTAURANTE, objeto nuevo:"+restaurante.toString());
 		
 		else 
-			log.info("Inserción, objeto nuevo:"+restaurante.toString());
+			log.info("INSERT-RESTAURANTE, objeto nuevo:"+restaurante.toString());
 			
 		return res;
 	}
@@ -87,7 +87,7 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
-		log.info("Eliminacion de restaurante, id:"+idRestaurante);
+		log.info("REMOVE-RESTAURANTE, id:"+idRestaurante);
 	}
 
 	@Override
