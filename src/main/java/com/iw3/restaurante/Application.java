@@ -1,17 +1,14 @@
 package com.iw3.restaurante;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.iw3.restaurante.persistance.RestauranteRepository;
-
 @SpringBootApplication
 public class Application implements CommandLineRunner{
 	
-	@Autowired
-	private RestauranteRepository restaurantesBO;
+	//@Autowired
+	//private RestauranteRepository restaurantesBO;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);		

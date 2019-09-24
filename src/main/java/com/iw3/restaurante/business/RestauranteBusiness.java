@@ -23,8 +23,7 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 	private RestauranteRepository restauranteDAO;
 
 	@Override
-	public List<Restaurante> list() throws BusinessException {
-		
+	public List<Restaurante> list() throws BusinessException {		
 		try {
 			return restauranteDAO.findAll();
 		} catch (Exception e) {
@@ -49,12 +48,24 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 
 	@Override
 	public Restaurante save(Restaurante restaurante) throws BusinessException {
+		Restaurante res;
+		Optional<Restaurante> aux = null;
+		boolean isNew = restaurante.getId() == null;
+		
 		try {
-			return restauranteDAO.save(restaurante);
+			res = restauranteDAO.save(restaurante);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
+		
+		if(!isNew) 			
+			log.info("Actualización, objeto nuevo:"+restaurante.toString());
+		
+		else 
+			log.info("Inserción, objeto nuevo:"+restaurante.toString());
+			
+		return res;
 	}
 
 	@Override
@@ -76,20 +87,24 @@ public class RestauranteBusiness implements IRestauranteBusiness {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
+		log.info("Eliminacion de restaurante, id:"+idRestaurante);
 	}
 
 	@Override
-	public Restaurante findFirstOrderByPuntuacion() throws BusinessException, NotFoundException{
-		Optional<Restaurante> op = null;
+	public List<Restaurante> findBestRating() throws BusinessException, NotFoundException{
+		Optional<List<Restaurante>> res = null;
+		Optional<Restaurante> op;
 		try {
 			op = restauranteDAO.findFirstByOrderByPuntuacionDesc();
+			
+			res = restauranteDAO.findByPuntuacion(op.get().getPuntuacion());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BusinessException(e);
 		}
-		if (!op.isPresent())
+		if (!res.isPresent())
 			throw new NotFoundException("No se encuentra ningún restaurante");
-		return op.get();
+		return res.get();
 	}
 
 	@Override

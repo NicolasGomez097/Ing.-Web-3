@@ -23,7 +23,7 @@ public class Restaurante {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@Column(length = 20)
 	private String nombre;
@@ -47,11 +47,11 @@ public class Restaurante {
 		cascade = {CascadeType.MERGE,CascadeType.REMOVE})
 	private List<Comida> comidas;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -103,5 +103,17 @@ public class Restaurante {
 		this.comidas = comidas;
 	}
 	
+	
+	@Override
+	public String toString() {
+		String res = "";
+		res += "{id:"+id;
+		res += ",nombre:"+nombre;
+		res += ",direccion:"+direccion;
+		res += ",horaApertura:"+horaApertura;
+		res += ",horaCierre:"+horaCierre;
+		res += ",puntuacion:"+puntuacion+"}";				
+		return res;
+	}
 	
 }
